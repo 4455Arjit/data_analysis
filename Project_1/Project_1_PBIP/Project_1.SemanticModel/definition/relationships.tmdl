@@ -1,0 +1,10 @@
+relationship c63a2c76-5a95-4bca-b0ae-81da80d6d3fc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Fact_OpenSource_Repos.CreatedAt
+	toColumn: LocalDateTable_f29dc979-8337-4095-b4be-e59f2edd4727.Date
+
+relationship dc0841e1-f8be-4318-9c17-07ef5465daaf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Fact_OpenSource_Repos.UpdatedAt
+	toColumn: LocalDateTable_34117739-8240-40c7-b732-655b5f8a7a85.Date
+

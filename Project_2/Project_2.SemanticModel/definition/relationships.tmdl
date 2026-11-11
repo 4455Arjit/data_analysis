@@ -1,0 +1,22 @@
+relationship 4760ddcc-9019-431b-b59c-b592cbeea390
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_sales_pipeline.engage_date
+	toColumn: LocalDateTable_3da83689-7535-49e0-81fd-7c56d59f9d66.Date
+
+relationship b25a619e-4c82-4263-8244-f274e2929ca8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_sales_pipeline.close_date
+	toColumn: LocalDateTable_df8c6262-e165-449b-8139-6fc866619b2a.Date
+
+relationship 19410a88-1228-adf4-9588-66b24f2b75c6
+	fromColumn: fact_sales_pipeline.account
+	toColumn: dim_accounts.account
+
+relationship 63677615-2470-2778-3c50-5f0377e8c491
+	fromColumn: fact_sales_pipeline.sales_agent
+	toColumn: dim_sales_teams.sales_agent
+
+relationship 9f409cb2-020b-91db-6904-9cbf942ed7d8
+	fromColumn: fact_sales_pipeline.product
+	toColumn: dim_products.product
+

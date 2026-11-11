@@ -1,0 +1,236 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "71197c792e8073954a6c",
+  "position": {
+    "x": 610.20408163265313,
+    "y": 106.12244897959184,
+    "z": 1000,
+    "height": 278.57142857142856,
+    "width": 669.38775510204084,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "patients"
+                    }
+                  },
+                  "Property": "Age Group"
+                }
+              },
+              "queryRef": "patients.Age Group",
+              "nativeQueryRef": "Age Group"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "patients"
+                    }
+                  },
+                  "Property": "Dead_alive"
+                }
+              },
+              "queryRef": "patients.Dead_alive",
+              "nativeQueryRef": "Dead Or Alive",
+              "displayName": "Dead Or Alive"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Encounters"
+                }
+              },
+              "queryRef": "_Measure.Total Encounters",
+              "nativeQueryRef": "Total Encounters"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Claim Cost"
+                }
+              },
+              "queryRef": "_Measure.Total Claim Cost",
+              "nativeQueryRef": "Total Claim Cost"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Uncovered Out-of-Pocket"
+                }
+              },
+              "queryRef": "_Measure.Uncovered Out-of-Pocket",
+              "nativeQueryRef": "Uncovered Out-of-Pocket"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Procedures"
+                }
+              },
+              "queryRef": "_Measure.Total Procedures",
+              "nativeQueryRef": "Total Procedures"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measure"
+                  }
+                },
+                "Property": "Total Claim Cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'High-Utilizer Patient Cohort Breakdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "995b6b8136b5660a68db",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "patients"
+              }
+            },
+            "Property": "Age Group"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9f7c8b59b63800c01e3d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "patients"
+              }
+            },
+            "Property": "Dead_alive"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "0b975c4ada3db86cd078",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Encounters"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3deb6c3b19ded0b8a336",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Claim Cost"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "85dcacd0b0292970ed68",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Uncovered Out-of-Pocket"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f129e16fcbaa05e44620",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Procedures"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

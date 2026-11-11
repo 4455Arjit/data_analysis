@@ -1,0 +1,106 @@
+table _Measure
+	lineageTag: 780c893f-5db0-4737-8191-03c4b028d6d4
+
+	measure 'Avg Length of Stay (Hrs)' = AVERAGE ( encounters[Duration Hours] )
+		lineageTag: c1d9a227-716b-4aa4-81ed-7f728bd45422
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Encounters per Patient' = DIVIDE ( [Total Encounters], [Unique Patients], 0 )
+		lineageTag: 1fe6f372-cc3c-4fd1-ab5f-296e7d868bcd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unique Patients' = DISTINCTCOUNT (encounters[patient_id])
+		formatString: 0
+		lineageTag: 817246f8-cf06-4f56-bc47-76c6826f87fd
+
+	measure 'Mortality Rate %' =
+			
+			VAR DeceasedCount = CALCULATE ( COUNTROWS ( patients ), patients[Dead_alive] = "Dead" )
+			RETURN DIVIDE ( DeceasedCount, COUNTROWS ( patients ), 0 )
+		lineageTag: d93e477e-bbcd-470e-b3f4-9221a24f59bc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Encounters' = COUNTROWS ( encounters )
+		formatString: 0
+		lineageTag: 5c0a0ab4-4103-4ada-8084-652dc6c8395e
+
+	measure 'Total Claim Cost' = SUM ( encounters[TOTAL_CLAIM_COST] )
+		lineageTag: 9e7f6aea-5850-4bc9-8ca4-7aa843596aa2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Base Encounter Cost' = SUM ( encounters[BASE_ENCOUNTER_COST] )
+		lineageTag: 7c5a3a65-eed9-495d-9435-d4b65b4c031e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Payer Coverage Amount' = SUM ( encounters[PAYER_COVERAGE] )
+		lineageTag: 7f261fe3-6546-4663-9fa8-d1d086697ff4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Uncovered Out-of-Pocket' = [Total Claim Cost] - [Payer Coverage Amount]
+		lineageTag: 5ccc690b-428a-480b-8b6d-701ec0fed25a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Payer Coverage %' = DIVIDE ( [Payer Coverage Amount], [Total Claim Cost], 0 )
+		lineageTag: bcae9585-7953-4118-8a61-677c945a0552
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Claim per Encounter' = AVERAGE ( encounters[TOTAL_CLAIM_COST] )
+		lineageTag: 93e6a660-e009-4949-b917-62a2ec7c21cb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Median Claim per Encounter' = MEDIAN ( encounters[TOTAL_CLAIM_COST] )
+		lineageTag: 0ff8a13e-35c8-4a13-adb2-20e168359754
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Procedures' = COUNTROWS ( procedures )
+		formatString: 0
+		lineageTag: d3bc86c9-aee6-47d6-8bb7-0431a982261d
+
+	measure 'Total Procedure Cost' = SUM (procedures[PROCEDURE_BASE_COST] )
+		formatString: 0
+		lineageTag: dfb29120-d1b7-433f-b9af-0c36b2ffa72f
+
+	measure 'Avg Cost per Procedure' = AVERAGE ( procedures[PROCEDURE_BASE_COST] )
+		lineageTag: 96365b4b-6187-452f-bc30-d8334e836b77
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Encounters with Procedures' = DISTINCTCOUNT ( procedures[encounter_key] )
+		formatString: 0
+		lineageTag: 9f9a2147-75a4-4430-979a-d682c6305a4e
+
+	measure 'Procedure Attachment Rate %' = DIVIDE ( [Encounters with Procedures], [Total Encounters], 0 )
+		lineageTag: ceb62e44-0321-4e5c-9394-d743fc4aead2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Procedures per Active Encounter' = DIVIDE ( [Total Procedures], [Encounters with Procedures], 0 )
+		lineageTag: cfd2507b-f0fa-437a-9ccf-101b3322e539
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: b96000d3-7b8b-4f66-9069-73fdbdddcda1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measure = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 39aac921a2f8440d9b27f4febae87fe3
+

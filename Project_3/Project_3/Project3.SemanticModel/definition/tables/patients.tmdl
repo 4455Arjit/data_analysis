@@ -1,0 +1,242 @@
+table patients
+	lineageTag: 061d3789-cf1c-4fcc-9617-d9343bbf922b
+
+	column BIRTHDATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f820c657-beb5-4fdd-84e7-77db11cea8f2
+		summarizeBy: none
+		sourceColumn: BIRTHDATE
+
+		variation Variation
+			isDefault
+			relationship: 6f7176ba-afe5-4742-a764-d9c401971a53
+			defaultHierarchy: LocalDateTable_027425a2-7a58-4856-87b9-b7e621a50a9b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SUFFIX
+		dataType: string
+		lineageTag: ebf62c77-d2ed-43a5-afee-84574e05c18c
+		summarizeBy: none
+		sourceColumn: SUFFIX
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARITAL
+		dataType: string
+		lineageTag: 7cbef502-906b-4ffb-8e55-67ff85e8b9bf
+		summarizeBy: none
+		sourceColumn: MARITAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column RACE
+		dataType: string
+		lineageTag: 20292b59-02d3-4673-84f5-efa2ccca9a05
+		summarizeBy: none
+		sourceColumn: RACE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ETHNICITY
+		dataType: string
+		lineageTag: c4d7a568-b9f4-4dd3-8082-3cafdf5ba129
+		summarizeBy: none
+		sourceColumn: ETHNICITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column GENDER
+		dataType: string
+		lineageTag: e6586688-8047-44bb-800b-88e21112a86d
+		summarizeBy: none
+		sourceColumn: GENDER
+
+		annotation SummarizationSetBy = Automatic
+
+	column BIRTHPLACE
+		dataType: string
+		lineageTag: be6ec347-3bbd-497c-98e4-91f44bc88552
+		summarizeBy: none
+		sourceColumn: BIRTHPLACE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ADDRESS
+		dataType: string
+		lineageTag: 2c7cdb0b-efda-49fc-9990-681171c4eb41
+		summarizeBy: none
+		sourceColumn: ADDRESS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CITY
+		dataType: string
+		lineageTag: e9d90c4b-5941-44e7-acae-ed07cd46aab4
+		summarizeBy: none
+		sourceColumn: CITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATE
+		dataType: string
+		lineageTag: fa32f0c4-7aea-49b2-8b19-522eb55b5f3a
+		summarizeBy: none
+		sourceColumn: STATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column COUNTY
+		dataType: string
+		lineageTag: 797e78d3-6558-41aa-92ee-9adde4c50a4b
+		summarizeBy: none
+		sourceColumn: COUNTY
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZIP
+		dataType: double
+		formatString: 0
+		lineageTag: 03ff5a79-cb3c-408b-af26-7399fb7b842c
+		summarizeBy: sum
+		sourceColumn: ZIP
+
+		annotation SummarizationSetBy = Automatic
+
+	column LAT
+		dataType: double
+		lineageTag: e0d41389-15f5-4334-987c-43033f0393c2
+		summarizeBy: sum
+		sourceColumn: LAT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LON
+		dataType: double
+		lineageTag: d878cd2b-dd9e-43cc-97f1-44b2d1318b15
+		summarizeBy: sum
+		sourceColumn: LON
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Patient_Name
+		dataType: string
+		lineageTag: 0ae2e6ba-43c6-4474-a8f1-24a80f208a57
+		summarizeBy: none
+		sourceColumn: Patient_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d7b204af-80e5-48be-aeda-33557fb8ea4b
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dead_alive
+		dataType: string
+		lineageTag: 2b352273-bc3e-4944-9327-a7121c4e7398
+		summarizeBy: none
+		sourceColumn: Dead_alive
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mai_den
+		dataType: string
+		lineageTag: 72970aa7-2db5-489c-9d0f-1875841bf790
+		summarizeBy: none
+		sourceColumn: Mai_den
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEATHDATE
+		dataType: string
+		lineageTag: fe24e957-39ab-43a9-84b3-fb3f7c39db9e
+		summarizeBy: none
+		sourceColumn: DEATHDATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column Patient_Age =
+			
+			VAR EndDate = COALESCE ( patients[DEATHDATE], DATE ( 2022, 2, 5 ) )
+			RETURN INT ( DATEDIFF ( patients[BIRTHDATE], EndDate, DAY ) / 365.25 )
+		formatString: 0
+		lineageTag: 486ba80b-7aa0-48f5-babf-59a8def8dac6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group' =
+			SWITCH (
+			    TRUE (),
+			    patients[Patient_Age] < 35, "18-34",
+			    patients[Patient_Age] < 50, "35-49",
+			    patients[Patient_Age] < 65, "50-64",
+			    patients[Patient_Age] < 80, "65-79",
+			    "80+"
+			)
+		lineageTag: 87be71e3-d367-4b63-8993-51ba632d429a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition patients = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\patients.csv"),[Delimiter=",", Columns=20, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", type text}, {"BIRTHDATE", type date}, {"DEATHDATE", type date}, {"PREFIX", type text}, {"FIRST", type text}, {"LAST", type text}, {"SUFFIX", type text}, {"MAIDEN", type text}, {"MARITAL", type text}, {"RACE", type text}, {"ETHNICITY", type text}, {"GENDER", type text}, {"BIRTHPLACE", type text}, {"ADDRESS", type text}, {"CITY", type text}, {"STATE", type text}, {"COUNTY", type text}, {"ZIP", Int64.Type}, {"LAT", type number}, {"LON", type number}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"FIRST", Text.Trim, type text}, {"LAST", Text.Trim, type text}, {"MAIDEN", Text.Trim, type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Trimmed Text", "First_name", each Text.Remove([FIRST],{"0".."9"})),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "Last_name", each Text.Remove([LAST],{"0".."9"})),
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "MAI_DEN", each Text.Remove([MAIDEN],{"0".."9"})),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom2",{"FIRST", "LAST", "MAIDEN"}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Removed Columns", "Full Name", each Text.Combine({[First_name], [Last_name]}, " "), type text),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Inserted Merged Column",{"First_name", "Last_name"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Columns1",{"Id", "BIRTHDATE", "DEATHDATE", "PREFIX", "Full Name", "SUFFIX", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON", "MAI_DEN"}),
+				    #"Inserted Merged Column1" = Table.AddColumn(#"Reordered Columns", "Patient_FullName", each Text.Combine({[PREFIX], [Full Name]}, " "), type text),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Inserted Merged Column1",{"PREFIX", "Full Name"}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Removed Columns2",{"Id", "BIRTHDATE", "SUFFIX", "Patient_FullName", "DEATHDATE", "MAI_DEN", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns1",{{"MAI_DEN", "MAIDEN"}, {"Patient_FullName", "Patient_Name"}}),
+				    #"Reordered Columns2" = Table.ReorderColumns(#"Renamed Columns",{"Id", "BIRTHDATE", "SUFFIX", "Patient_Name", "MAIDEN", "DEATHDATE", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Reordered Columns2", "Death_Date", each if [DEATHDATE] = null then "Alive" else "Dead"),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Conditional Column", "DEATHDATE", "DEATHDATE - Copy"),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Duplicated Column",{{"DEATHDATE - Copy", "DEATHDATE_original"}}),
+				    #"Reordered Columns3" = Table.ReorderColumns(#"Renamed Columns1",{"Id", "BIRTHDATE", "SUFFIX", "Patient_Name", "MAIDEN", "DEATHDATE", "Death_Date", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"}),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Reordered Columns3",{"DEATHDATE"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns3",{{"Death_Date", "Dead_alive"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns2", {"Id"}, dim_patients_id, {"Id_hash_patient"}, "dim_patients_id", JoinKind.LeftOuter),
+				    #"Expanded dim_patients_id" = Table.ExpandTableColumn(#"Merged Queries", "dim_patients_id", {"patient_id"}, {"dim_patients_id.patient_id"}),
+				    #"Reordered Columns4" = Table.ReorderColumns(#"Expanded dim_patients_id",{"dim_patients_id.patient_id", "Id", "BIRTHDATE", "SUFFIX", "Patient_Name", "MAIDEN", "Dead_alive", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON", "DEATHDATE_original"}),
+				    #"Removed Columns4" = Table.RemoveColumns(#"Reordered Columns4",{"Id"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Removed Columns4",{{"dim_patients_id.patient_id", "patient_id"}}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Renamed Columns3", "Mai_den", each if [MAIDEN] = "" then "No Maiden" else if [MAIDEN] = [MAIDEN] then [MAIDEN] else null),
+				    #"Removed Columns5" = Table.RemoveColumns(#"Added Conditional Column1",{"MAIDEN"}),
+				    #"Reordered Columns5" = Table.ReorderColumns(#"Removed Columns5",{"patient_id", "BIRTHDATE", "SUFFIX", "Patient_Name", "Mai_den", "Dead_alive", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON", "DEATHDATE_original"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Reordered Columns5",null,0,Replacer.ReplaceValue,{"ZIP"}),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Replaced Value", "DEATHDATE_original", "DEATHDATE_original - Copy"),
+				    #"Renamed Columns4" = Table.RenameColumns(#"Duplicated Column1",{{"DEATHDATE_original - Copy", "DEATHDATE_mod"}}),
+				    #"Added Conditional Column2" = Table.AddColumn(#"Renamed Columns4", "Death_date", each if [DEATHDATE_mod] = null then #date(2022, 2, 5) else [DEATHDATE_mod]),
+				    #"Filtered Rows" = Table.SelectRows(#"Added Conditional Column2", each true),
+				    #"Removed Columns6" = Table.RemoveColumns(#"Filtered Rows",{"DEATHDATE_mod", "DEATHDATE_original"}),
+				    #"Renamed Columns5" = Table.RenameColumns(#"Removed Columns6",{{"Death_date", "DEATHDATE"}}),
+				    #"Reordered Columns6" = Table.ReorderColumns(#"Renamed Columns5",{"patient_id", "BIRTHDATE", "DEATHDATE", "SUFFIX", "Patient_Name", "Mai_den", "Dead_alive", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"})
+				in
+				    #"Reordered Columns6"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

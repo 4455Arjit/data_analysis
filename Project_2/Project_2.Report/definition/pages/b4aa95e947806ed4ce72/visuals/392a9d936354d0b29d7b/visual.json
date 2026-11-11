@@ -1,0 +1,301 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "392a9d936354d0b29d7b",
+  "position": {
+    "x": 58,
+    "y": 219,
+    "z": 2,
+    "height": 157.56838905775078,
+    "width": 1108.8145896656536,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_sales_pipeline"
+                    }
+                  },
+                  "Property": "deal_stage"
+                }
+              },
+              "queryRef": "fact_sales_pipeline.deal_stage",
+              "nativeQueryRef": "deal_stage",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_sales_teams"
+                    }
+                  },
+                  "Property": "regional_office"
+                }
+              },
+              "queryRef": "dim_sales_teams.regional_office",
+              "nativeQueryRef": "regional_office",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_sales_teams"
+                    }
+                  },
+                  "Property": "manager"
+                }
+              },
+              "queryRef": "dim_sales_teams.manager",
+              "nativeQueryRef": "manager",
+              "active": false
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_sales_pipeline"
+                        }
+                      },
+                      "Property": "close_value"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(fact_sales_pipeline.close_value)1",
+              "nativeQueryRef": "Sum close_value",
+              "displayName": "Sum close_value"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_sales_pipeline"
+                        }
+                      },
+                      "Property": "opportunity_id"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(fact_sales_pipeline.opportunity_id)",
+              "nativeQueryRef": "opportunity_id"
+            },
+            {
+              "field": {
+                "Arithmetic": {
+                  "Left": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "fact_sales_pipeline"
+                            }
+                          },
+                          "Property": "close_value"
+                        }
+                      },
+                      "Function": 0
+                    }
+                  },
+                  "Right": {
+                    "ScopedEval": {
+                      "Expression": {
+                        "Aggregation": {
+                          "Expression": {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "fact_sales_pipeline"
+                                }
+                              },
+                              "Property": "close_value"
+                            }
+                          },
+                          "Function": 0
+                        }
+                      },
+                      "Scope": [
+                        {
+                          "RoleRef": {
+                            "Role": "Rows"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "Operator": 3
+                }
+              },
+              "queryRef": "Divide(Sum(fact_sales_pipeline.close_value), ScopedEval(Sum(fact_sales_pipeline.close_value), [Role.Rows]))",
+              "nativeQueryRef": "% of close_value",
+              "displayName": "% of close_value"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c46aaf257086da0b80c5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_sales_teams"
+              }
+            },
+            "Property": "regional_office"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "bd261f24bc9b407e5015",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_sales_pipeline"
+              }
+            },
+            "Property": "deal_stage"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b5175e896bdca6c757cb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_sales_teams"
+              }
+            },
+            "Property": "manager"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "ab88b260881a18695fb0",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_sales_pipeline"
+                  }
+                },
+                "Property": "close_value"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "33906d13b7bd60ea0c82",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_sales_pipeline"
+                  }
+                },
+                "Property": "opportunity_id"
+              }
+            },
+            "Function": 3
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "005a3503d6e22080a47b",
+        "field": {
+          "Arithmetic": {
+            "Left": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "fact_sales_pipeline"
+                      }
+                    },
+                    "Property": "close_value"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "Right": {
+              "ScopedEval": {
+                "Expression": {
+                  "Aggregation": {
+                    "Expression": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "fact_sales_pipeline"
+                          }
+                        },
+                        "Property": "close_value"
+                      }
+                    },
+                    "Function": 0
+                  }
+                },
+                "Scope": [
+                  {
+                    "RoleRef": {
+                      "Role": "Rows"
+                    }
+                  }
+                ]
+              }
+            },
+            "Operator": 3
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

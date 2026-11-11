@@ -1,0 +1,231 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "120a6960acdd8461998c",
+  "position": {
+    "x": 628.526890101325,
+    "y": 311.27045985970381,
+    "z": 2000,
+    "height": 408.04364770070146,
+    "width": 651.47310989867492,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_OpenSource_Repos"
+                    }
+                  },
+                  "Property": "RepoName"
+                }
+              },
+              "queryRef": "Query1.RepoName",
+              "nativeQueryRef": "RepoName",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_OpenSource_Repos"
+                    }
+                  },
+                  "Property": "PopularityTier"
+                }
+              },
+              "queryRef": "Query1.PopularityTier",
+              "nativeQueryRef": "PopularityTier"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fact_OpenSource_Repos"
+                        }
+                      },
+                      "Property": "Open Issues"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Query1.Open Issues)",
+              "nativeQueryRef": "Sum of Open Issues"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fact_OpenSource_Repos"
+                        }
+                      },
+                      "Property": "Stars"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Query1.Stars)",
+              "nativeQueryRef": "Sum of Stars",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fact_OpenSource_Repos"
+                        }
+                      },
+                      "Property": "Forks"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Query1.Forks)",
+              "nativeQueryRef": "Sum of Forks"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Forks vs. Stars Correlation (Sized by Open Issues)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a38f7d6a736712baabd4",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Fact_OpenSource_Repos"
+                  }
+                },
+                "Property": "Stars"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4c9ab32350cba91f53ff",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Fact_OpenSource_Repos"
+                  }
+                },
+                "Property": "Forks"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "40dac9f8321f72e584f5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_OpenSource_Repos"
+              }
+            },
+            "Property": "RepoName"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9639740fbd4af7574ee3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_OpenSource_Repos"
+              }
+            },
+            "Property": "PopularityTier"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "92abdcc2f55ff16ec941",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Fact_OpenSource_Repos"
+                  }
+                },
+                "Property": "Open Issues"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

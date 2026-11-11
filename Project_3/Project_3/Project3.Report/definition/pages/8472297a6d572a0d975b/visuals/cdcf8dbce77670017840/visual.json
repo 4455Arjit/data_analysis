@@ -1,0 +1,210 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "cdcf8dbce77670017840",
+  "position": {
+    "x": 431.25,
+    "y": 153.75,
+    "z": 2000,
+    "height": 566.25,
+    "width": 417.5,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "encounters"
+                    }
+                  },
+                  "Property": "ENCOUNTERCLASS"
+                }
+              },
+              "queryRef": "encounters.ENCOUNTERCLASS",
+              "nativeQueryRef": "ENCOUNTERCLASS",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Payer Coverage %"
+                }
+              },
+              "queryRef": "_Measure.Payer Coverage %",
+              "nativeQueryRef": "Payer Coverage %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Encounters"
+                }
+              },
+              "queryRef": "_Measure.Total Encounters",
+              "nativeQueryRef": "Total Encounters"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Median Claim per Encounter"
+                }
+              },
+              "queryRef": "_Measure.Median Claim per Encounter",
+              "nativeQueryRef": "Median Claim per Encounter"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Avg Claim per Encounter"
+                }
+              },
+              "queryRef": "_Measure.Avg Claim per Encounter",
+              "nativeQueryRef": "Avg Claim per Encounter"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measure"
+                  }
+                },
+                "Property": "Median Claim per Encounter"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Average vs. Median Claim Cost by Encounter Class'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "087501ab4049003bcd00",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "encounters"
+              }
+            },
+            "Property": "ENCOUNTERCLASS"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b73527a59cb9ceda09a2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Payer Coverage %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "deb328ceea87596a6056",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Encounters"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a1d2f43a401b12695c2b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Median Claim per Encounter"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "98f8583e27954b5a1387",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Avg Claim per Encounter"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

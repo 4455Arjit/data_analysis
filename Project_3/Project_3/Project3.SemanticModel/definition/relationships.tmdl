@@ -1,0 +1,51 @@
+relationship 1329cb71-ed8e-422f-9a60-31138efb76bb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: procedures.START
+	toColumn: LocalDateTable_964f1efb-37df-4494-9b1b-86ac5d8b3259.Date
+
+relationship 297e5865-5d37-413f-9157-12e78fffdaac
+	joinOnDateBehavior: datePartOnly
+	fromColumn: procedures.STOP
+	toColumn: LocalDateTable_e324f7b1-9f84-4489-8e2b-c5211b4a09a2.Date
+
+relationship 6f7176ba-afe5-4742-a764-d9c401971a53
+	joinOnDateBehavior: datePartOnly
+	fromColumn: patients.BIRTHDATE
+	toColumn: LocalDateTable_027425a2-7a58-4856-87b9-b7e621a50a9b.Date
+
+relationship df3ae2f0-cb8a-497f-98f7-ffa94b0a9ceb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: encounters.START
+	toColumn: LocalDateTable_cc558f71-d1ab-49bf-ae31-8133dd383036.Date
+
+relationship 90238828-0aae-4389-9695-7c6906860102
+	joinOnDateBehavior: datePartOnly
+	fromColumn: encounters.STOP
+	toColumn: LocalDateTable_58c1b93d-0053-4661-b8e2-85e36c5ef44c.Date
+
+relationship AutoDetected_499f36cd-b016-4b43-a34d-f5c558b6def9
+	fromColumn: procedures.patient_id
+	toColumn: patients.patient_id
+
+relationship AutoDetected_0a102bd9-6612-4f5d-aa43-0cee28665a01
+	fromColumn: encounters.patient_id
+	toColumn: patients.patient_id
+
+relationship 86dd182b-62b0-4f39-9f3e-85e3d42b54d4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: procedures.'Procedure Date'
+	toColumn: LocalDateTable_997cdc04-b4db-40e5-9c46-73ea13a794aa.Date
+
+relationship bd84072a-d122-3674-e04a-4cdef3fc2352
+	fromColumn: encounters.Encounter_Date
+	toColumn: DimDate.Date
+
+relationship AutoDetected_88bbb7eb-9933-4ff5-83c5-ec3fd4bd7eb6
+	fromColumn: encounters.payer_key
+	toColumn: payers.payer_key
+
+relationship 1fedf1e9-bf0d-1c97-efec-d695e67713f9
+	isActive: false
+	fromColumn: procedures.encounter_key
+	toColumn: encounters.encounter_key
+

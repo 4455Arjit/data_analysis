@@ -1,0 +1,144 @@
+table procedures
+	lineageTag: 3f3f81d2-431c-4d49-9bbe-dfc304e1fb48
+
+	column START
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c6287600-38cc-40ed-940e-cf7a9d567509
+		summarizeBy: none
+		sourceColumn: START
+
+		variation Variation
+			isDefault
+			relationship: 1329cb71-ed8e-422f-9a60-31138efb76bb
+			defaultHierarchy: LocalDateTable_964f1efb-37df-4494-9b1b-86ac5d8b3259.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column STOP
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 722e7a7e-36c4-46f6-a347-40a9ea596c8c
+		summarizeBy: none
+		sourceColumn: STOP
+
+		variation Variation
+			isDefault
+			relationship: 297e5865-5d37-413f-9157-12e78fffdaac
+			defaultHierarchy: LocalDateTable_e324f7b1-9f84-4489-8e2b-c5211b4a09a2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODE
+		dataType: int64
+		formatString: 0
+		lineageTag: 54b4c994-0938-49bf-bb22-b374e887d9cc
+		summarizeBy: sum
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROCEDURE_DESCRIPTION
+		dataType: string
+		lineageTag: 84df681b-10a0-4bd3-b120-0a738c20c5e1
+		summarizeBy: none
+		sourceColumn: PROCEDURE_DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROCEDURE_BASE_COST
+		dataType: int64
+		formatString: 0
+		lineageTag: f9541071-d4f3-4675-b5eb-8043398fc2a7
+		summarizeBy: sum
+		sourceColumn: PROCEDURE_BASE_COST
+
+		annotation SummarizationSetBy = Automatic
+
+	column REASONDESCRIPTION
+		dataType: string
+		lineageTag: 81e878c9-8964-431f-9cbd-6e1f58f906be
+		summarizeBy: none
+		sourceColumn: REASONDESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2dec0cf0-3353-42d5-ab1c-459aa2abd771
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column encounter_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dd66030-ebe7-49f0-9265-6ca9d53584ac
+		summarizeBy: sum
+		sourceColumn: encounter_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column REASON_CODE
+		dataType: string
+		lineageTag: dff27032-50cc-4123-9dea-8ba8443bed18
+		summarizeBy: none
+		sourceColumn: REASON_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Procedure Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e5b33fda-5cad-4543-9e78-f04e4395c28f
+		summarizeBy: none
+		sourceColumn: Procedure Date
+
+		variation Variation
+			isDefault
+			relationship: 86dd182b-62b0-4f39-9f3e-85e3d42b54d4
+			defaultHierarchy: LocalDateTable_997cdc04-b4db-40e5-9c46-73ea13a794aa.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition procedures = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\procedures.csv"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"START", type datetime}, {"STOP", type datetime}, {"PATIENT", type text}, {"ENCOUNTER", type text}, {"CODE", Int64.Type}, {"DESCRIPTION", type text}, {"BASE_COST", Int64.Type}, {"REASONCODE", Int64.Type}, {"REASONDESCRIPTION", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"PATIENT", "PATIENT_ID"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns", {"PATIENT_ID"}, dim_patients_id, {"Id_hash_patient"}, "dim_patients_id", JoinKind.LeftOuter),
+				    #"Expanded dim_patients_id" = Table.ExpandTableColumn(#"Merged Queries", "dim_patients_id", {"patient_id"}, {"dim_patients_id.patient_id"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Expanded dim_patients_id",{"dim_patients_id.patient_id", "PATIENT_ID", "START", "STOP", "ENCOUNTER", "CODE", "DESCRIPTION", "BASE_COST", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"PATIENT_ID"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"dim_patients_id.patient_id", "patient_id"}}),
+				    #"Sorted Rows" = Table.Sort(#"Renamed Columns1",{{"patient_id", Order.Ascending}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Sorted Rows", {"ENCOUNTER"}, dim_encounters_id, {"encounter_Id_hash"}, "dim_encounters_id", JoinKind.LeftOuter),
+				    #"Expanded dim_encounters_id" = Table.ExpandTableColumn(#"Merged Queries1", "dim_encounters_id", {"encounter_key"}, {"dim_encounters_id.encounter_key"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded dim_encounters_id",{{"dim_encounters_id.encounter_key", "encounter_key"}}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Renamed Columns2",{"patient_id", "START", "STOP", "ENCOUNTER", "encounter_key", "CODE", "DESCRIPTION", "BASE_COST", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Reordered Columns1",{"ENCOUNTER"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Removed Columns1", "Custom", each if [REASONCODE] = null then "n/a" else [REASONCODE]),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"REASONCODE"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Removed Columns2",{{"Custom", "REASON_CODE"}}),
+				    #"Reordered Columns2" = Table.ReorderColumns(#"Renamed Columns3",{"patient_id", "START", "STOP", "encounter_key", "CODE", "DESCRIPTION", "BASE_COST", "REASON_CODE", "REASONDESCRIPTION"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns2",{{"STOP", type datetime}, {"START", type datetime}}),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Changed Type1", "START", "START - Copy"),
+				    #"Extracted Date" = Table.TransformColumns(#"Duplicated Column",{{"START - Copy", DateTime.Date, type date}}),
+				    #"Renamed Columns4" = Table.RenameColumns(#"Extracted Date",{{"START - Copy", "Procedure Date"}}),
+				    #"Reordered Columns3" = Table.ReorderColumns(#"Renamed Columns4",{"patient_id", "START", "Procedure Date", "STOP", "encounter_key", "CODE", "DESCRIPTION", "BASE_COST", "REASON_CODE", "REASONDESCRIPTION"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Reordered Columns3","","General Clinical Procedure",Replacer.ReplaceValue,{"REASONDESCRIPTION"}),
+				    #"Renamed Columns5" = Table.RenameColumns(#"Replaced Value",{{"DESCRIPTION", "PROCEDURE_DESCRIPTION"}, {"BASE_COST", "PROCEDURE_BASE_COST"}})
+				in
+				    #"Renamed Columns5"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

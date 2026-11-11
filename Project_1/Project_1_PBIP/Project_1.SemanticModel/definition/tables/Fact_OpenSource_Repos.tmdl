@@ -1,0 +1,204 @@
+table Fact_OpenSource_Repos
+	lineageTag: 4298452f-3e1a-46ea-83a8-29b0a19329d0
+
+	column 'Total Tracked Repos'
+		dataType: int64
+		formatString: 0
+		lineageTag: 36b09402-d642-492d-a524-91fd3d07f253
+		summarizeBy: count
+		sourceColumn: Total Tracked Repos
+
+		annotation SummarizationSetBy = Automatic
+
+	column RepoName
+		dataType: string
+		lineageTag: 243d1d1f-5ab7-4327-bac5-bce80918fce5
+		summarizeBy: none
+		sourceColumn: RepoName
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName
+		dataType: string
+		lineageTag: 1050b5ee-a213-4405-81e4-ca14cce1d896
+		summarizeBy: none
+		sourceColumn: FullName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Language
+		dataType: string
+		lineageTag: 21f55899-9a79-42b0-a971-816851e4552e
+		summarizeBy: none
+		sourceColumn: Language
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stars
+		dataType: int64
+		formatString: 0
+		lineageTag: 72ce5602-1bf5-4d15-90f9-ddf7f2888c10
+		summarizeBy: sum
+		sourceColumn: Stars
+
+		annotation SummarizationSetBy = Automatic
+
+	column PopularityTier
+		dataType: string
+		lineageTag: 34b35e34-90a8-405c-8de8-0c842c7ffbd1
+		summarizeBy: none
+		sourceColumn: PopularityTier
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forks
+		dataType: int64
+		formatString: 0
+		lineageTag: 5089274a-5147-4454-b4fb-f2ad0ce2c79e
+		summarizeBy: sum
+		sourceColumn: Forks
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedAt
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 46f8956e-7efe-4aa3-b4dc-dffa924302bd
+		summarizeBy: none
+		sourceColumn: CreatedAt
+
+		variation Variation
+			isDefault
+			relationship: c63a2c76-5a95-4bca-b0ae-81da80d6d3fc
+			defaultHierarchy: LocalDateTable_f29dc979-8337-4095-b4be-e59f2edd4727.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column UpdatedAt
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3bbb7038-ca84-4e63-b670-884bf42d26e8
+		summarizeBy: none
+		sourceColumn: UpdatedAt
+
+		variation Variation
+			isDefault
+			relationship: dc0841e1-f8be-4318-9c17-07ef5465daaf
+			defaultHierarchy: LocalDateTable_34117739-8240-40c7-b732-655b5f8a7a85.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Open Issues'
+		dataType: int64
+		formatString: 0
+		lineageTag: adf2bf76-771b-4f23-94c0-dd8cb728a97f
+		summarizeBy: sum
+		sourceColumn: Open Issues
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeKB
+		dataType: int64
+		formatString: 0
+		lineageTag: 9199ea57-8e75-4021-97a6-def6253b51c9
+		summarizeBy: sum
+		sourceColumn: SizeKB
+
+		annotation SummarizationSetBy = Automatic
+
+	column OwnerLogin
+		dataType: string
+		lineageTag: 85c4144d-ddd8-4f07-914f-8bb532a2ed5c
+		summarizeBy: none
+		sourceColumn: OwnerLogin
+
+		annotation SummarizationSetBy = Automatic
+
+	column OwnerType
+		dataType: string
+		lineageTag: 736c4001-a6cc-412a-914e-c356cc1ea9e5
+		summarizeBy: none
+		sourceColumn: OwnerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column LicenseType
+		dataType: string
+		lineageTag: feccd83c-2ef4-451c-8dea-61600ed71f53
+		summarizeBy: none
+		sourceColumn: LicenseType
+
+		annotation SummarizationSetBy = Automatic
+
+	column RepoAgeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: f29b9180-1527-497a-8454-391ed327d977
+		summarizeBy: sum
+		sourceColumn: RepoAgeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_OpenSource_Repos = m
+		mode: import
+		source =
+				let
+				    Source = Json.Document(
+				        Web.Contents(
+				            "https://api.github.com",
+				            [
+				                RelativePath = "search/repositories",
+				                Query = [
+				                    q = "topic:ai language:typescript",
+				                    sort = "stars",
+				                    order = "desc",
+				                    per_page = "100"
+				                ],
+				                Headers = [#"User-Agent" = "PowerBI-Portfolio-App"]
+				            ]
+				        )
+				    ),
+				    ItemsList = Source[items],
+				    ConvertedToTable = Table.FromList(ItemsList, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    ExpandedRepos = Table.ExpandRecordColumn(
+				        ConvertedToTable, "Column1",
+				        {"id", "name", "full_name", "stargazers_count", "forks_count", "open_issues_count", "size", "created_at", "updated_at", "language", "owner", "license"},
+				        {"RepoID", "RepoName", "FullName", "Stars", "Forks", "OpenIssues", "SizeKB", "CreatedAt", "UpdatedAt", "Language", "OwnerRecord", "LicenseRecord"}
+				    ),
+				    ExpandedOwner = Table.ExpandRecordColumn(ExpandedRepos, "OwnerRecord", {"login", "type"}, {"OwnerLogin", "OwnerType"}),
+				    ExpandedLicense = Table.ExpandRecordColumn(ExpandedOwner, "LicenseRecord", {"spdx_id"}, {"LicenseType"}),
+				    ParsedDates = Table.TransformColumns(
+				        ExpandedLicense,
+				        {
+				            {"CreatedAt", each Date.From(DateTimeZone.FromText(_)), type date},
+				            {"UpdatedAt", each Date.From(DateTimeZone.FromText(_)), type date}
+				        }
+				    ),
+				    TypedColumns = Table.TransformColumnTypes(
+				        ParsedDates,
+				        {
+				            {"RepoID", Int64.Type}, {"Stars", Int64.Type}, {"Forks", Int64.Type},
+				            {"OpenIssues", Int64.Type}, {"SizeKB", Int64.Type}
+				        }
+				    ),
+				    #"Filtered Rows" = Table.SelectRows(TypedColumns, each true),
+				    #"Replaced Value" = Table.ReplaceValue(#"Filtered Rows",null,"Unlicensed",Replacer.ReplaceValue,{"LicenseType"}),
+				    #"Inserted Age" = Table.AddColumn(#"Replaced Value", "Age", each Date.From(DateTime.LocalNow()) - [CreatedAt], type duration),
+				    #"Inserted Total Days" = Table.AddColumn(#"Inserted Age", "Total Days", each Duration.TotalDays([Age]), type number),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Inserted Total Days",{{"Total Days", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Total Days", "RepoAgeDays"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "PopularityTier", each if [Stars] >= 20000 then "Mega Repo 20k+)" else if [Stars] >= 5000 then "High Growth (5k–20k)" else "Emerging (<5k)"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"Age"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Columns",{"RepoID", "RepoName", "FullName", "Language", "Stars", "PopularityTier", "Forks", "CreatedAt", "UpdatedAt", "OpenIssues", "SizeKB", "OwnerLogin", "OwnerType", "LicenseType", "RepoAgeDays"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Reordered Columns",{{"RepoID", "Total Tracked Repos"}, {"OpenIssues", "Open Issues"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

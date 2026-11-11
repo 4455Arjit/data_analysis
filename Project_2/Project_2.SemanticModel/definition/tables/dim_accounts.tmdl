@@ -1,0 +1,82 @@
+table dim_accounts
+	lineageTag: 43bbce40-c5f3-4df5-8161-0f0331e8ba10
+
+	column account
+		dataType: string
+		lineageTag: c662a70b-ac75-4d7f-b88e-e546daa5c97a
+		summarizeBy: none
+		sourceColumn: account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sector
+		dataType: string
+		lineageTag: 56a5e30d-4c6e-468a-94b4-7dcfa27f692e
+		summarizeBy: none
+		sourceColumn: sector
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_established
+		dataType: int64
+		formatString: 0
+		lineageTag: d10bf0bb-e5a4-4e2b-a493-50256db3b480
+		summarizeBy: none
+		sourceColumn: year_established
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue_musd
+		dataType: double
+		lineageTag: 4af2f12d-5369-45d0-89af-855e876c1bc7
+		summarizeBy: none
+		sourceColumn: revenue_musd
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column employees
+		dataType: int64
+		formatString: 0
+		lineageTag: 982ede5b-5639-4835-bdc3-3dc5ff652166
+		summarizeBy: none
+		sourceColumn: employees
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column office_location
+		dataType: string
+		lineageTag: abd59c3a-1e83-4adf-8cb3-4594c4250df0
+		summarizeBy: none
+		sourceColumn: office_location
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_accounts = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("aws-0-ap-southeast-1.pooler.supabase.com", "postgres"),
+				    public_dim_accounts = Source{[Schema="public",Item="dim_accounts"]}[Data]
+				in
+				    public_dim_accounts
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

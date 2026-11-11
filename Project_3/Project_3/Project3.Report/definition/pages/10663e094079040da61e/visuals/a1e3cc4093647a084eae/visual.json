@@ -1,0 +1,77 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "a1e3cc4093647a084eae",
+  "position": {
+    "x": 950,
+    "y": 574.48979591836735,
+    "z": 3003,
+    "height": 145.91836734693877,
+    "width": 329.59183673469386,
+    "tabOrder": 3003
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "payers"
+                    }
+                  },
+                  "Property": "Payer Category"
+                }
+              },
+              "queryRef": "payers.Payer Category",
+              "nativeQueryRef": "Payer Category",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Basic'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "06942e3bb49026ed9502",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "payers"
+              }
+            },
+            "Property": "Payer Category"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

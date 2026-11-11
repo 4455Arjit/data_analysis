@@ -1,0 +1,49 @@
+table dim_products
+	lineageTag: a3a26415-84ab-447c-9910-e19f6ad51bd2
+
+	column product
+		dataType: string
+		lineageTag: c38aacae-c9dd-4f4d-9a89-a702b0f6cb4f
+		summarizeBy: none
+		sourceColumn: product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column series
+		dataType: string
+		lineageTag: 2f8ed11d-a47f-4fa5-8217-5e4c529432c0
+		summarizeBy: none
+		sourceColumn: series
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_price
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d7942e1-622f-4bed-8c2c-62b85d41d9fb
+		summarizeBy: none
+		sourceColumn: sales_price
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_products = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("aws-0-ap-southeast-1.pooler.supabase.com", "postgres"),
+				    public_dim_products = Source{[Schema="public",Item="dim_products"]}[Data]
+				in
+				    public_dim_products
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

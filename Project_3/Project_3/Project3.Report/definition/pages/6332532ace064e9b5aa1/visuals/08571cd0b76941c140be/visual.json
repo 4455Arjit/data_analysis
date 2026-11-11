@@ -1,0 +1,169 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "08571cd0b76941c140be",
+  "position": {
+    "x": 0,
+    "y": 115,
+    "z": 1000,
+    "height": 605,
+    "width": 640,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "scatterChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "procedures"
+                    }
+                  },
+                  "Property": "PROCEDURE_DESCRIPTION"
+                }
+              },
+              "queryRef": "procedures.PROCEDURE_DESCRIPTION",
+              "nativeQueryRef": "PROCEDURE_DESCRIPTION",
+              "active": true
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Procedure Cost"
+                }
+              },
+              "queryRef": "_Measure.Total Procedure Cost",
+              "nativeQueryRef": "Total Procedure Cost"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Procedures"
+                }
+              },
+              "queryRef": "_Measure.Total Procedures",
+              "nativeQueryRef": "Total Procedures",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Avg Cost per Procedure"
+                }
+              },
+              "queryRef": "_Measure.Avg Cost per Procedure",
+              "nativeQueryRef": "Avg Cost per Procedure"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Procedure Volume vs. Average Cost (Bubble Size = Total Spend)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "9cba1dcfc59612ec6b0e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "procedures"
+              }
+            },
+            "Property": "PROCEDURE_DESCRIPTION"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "eaf07c50a0c03ae00078",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Procedure Cost"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c5a45acb0122bb600801",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Procedures"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bb20ead27e3b8e8080c0",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Avg Cost per Procedure"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

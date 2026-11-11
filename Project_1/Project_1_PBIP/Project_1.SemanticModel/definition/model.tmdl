@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Fact_OpenSource_Repos","Sample - Superstore"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Fact_OpenSource_Repos
+ref table DateTableTemplate_8c0c3c5f-2b9e-434b-869f-2fcd103fc70e
+ref table LocalDateTable_f29dc979-8337-4095-b4be-e59f2edd4727
+ref table LocalDateTable_34117739-8240-40c7-b732-655b5f8a7a85
+ref table 'Sample - Superstore'
+
+ref cultureInfo en-US
+

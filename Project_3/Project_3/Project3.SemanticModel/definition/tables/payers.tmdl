@@ -1,0 +1,101 @@
+table payers
+	lineageTag: 97305060-f20d-426e-bb4f-dde5dae7e145
+
+	column payer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: e37c5c1f-25de-4fe0-8e1d-95202207913d
+		summarizeBy: none
+		sourceColumn: payer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Id
+		dataType: string
+		lineageTag: e0795d9a-08ba-41f7-ad8a-617165f12309
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payer Category'
+		dataType: string
+		lineageTag: 73931da5-76c7-476b-b521-d5a28d9fd90e
+		summarizeBy: none
+		sourceColumn: Payer Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column payer_name
+		dataType: string
+		lineageTag: 116dc95e-2de0-48b2-ae95-0bd0bfebbb22
+		summarizeBy: none
+		sourceColumn: payer_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ADDRESS
+		dataType: string
+		lineageTag: 5663e2b8-0b07-4881-9045-051bcbbab5b7
+		summarizeBy: none
+		sourceColumn: ADDRESS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CITY
+		dataType: string
+		lineageTag: 021f31fe-dffd-427e-a3d2-86201dbbcf5d
+		summarizeBy: none
+		sourceColumn: CITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATE_HEADQUARTERED
+		dataType: string
+		lineageTag: 8e1b1ef1-3b47-4a5d-b74a-b0efb2601d6b
+		summarizeBy: none
+		sourceColumn: STATE_HEADQUARTERED
+
+		annotation SummarizationSetBy = Automatic
+
+	column ZIP
+		dataType: int64
+		formatString: 0
+		lineageTag: c5556b4b-bfd4-4fbe-88cf-167a0d477473
+		summarizeBy: none
+		sourceColumn: ZIP
+
+		annotation SummarizationSetBy = Automatic
+
+	column PHONE
+		dataType: string
+		lineageTag: 217741de-78c8-4f4c-8938-4d7bdc82fec2
+		summarizeBy: none
+		sourceColumn: PHONE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition payers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\payers.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", type text}, {"NAME", type text}, {"ADDRESS", type text}, {"CITY", type text}, {"STATE_HEADQUARTERED", type text}, {"ZIP", Int64.Type}, {"PHONE", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"NAME", "payer_name"}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Renamed Columns",{{"payer_name", Text.Trim, type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Trimmed Text", "Custom", each if [payer_name] = "NO_INSURANCE" then "Self-Pay / Uninsured"
+				else if List.Contains({"Medicare", "Medicaid", "Dual Eligible"}, [payer_name]) then "Government"
+				else "Commercial"),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"Custom", "Payer Category"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns1",{"Id", "Payer Category", "payer_name", "ADDRESS", "CITY", "STATE_HEADQUARTERED", "ZIP", "PHONE"}),
+				    #"Added Index" = Table.AddIndexColumn(#"Reordered Columns", "Index", 1, 1, Int64.Type),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Added Index",{{"Index", "payer_key"}}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Renamed Columns2",{"payer_key", "Id", "Payer Category", "payer_name", "ADDRESS", "CITY", "STATE_HEADQUARTERED", "ZIP", "PHONE"})
+				in
+				    #"Reordered Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

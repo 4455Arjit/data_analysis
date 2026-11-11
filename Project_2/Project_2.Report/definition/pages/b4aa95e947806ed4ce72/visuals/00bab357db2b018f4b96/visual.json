@@ -1,0 +1,99 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "00bab357db2b018f4b96",
+  "position": {
+    "x": 382.24924012158056,
+    "y": 376.41337386018239,
+    "z": 1,
+    "height": 343.34346504559272,
+    "width": 897.75075987841944,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "funnel",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_sales_pipeline"
+                    }
+                  },
+                  "Property": "deal_stage"
+                }
+              },
+              "queryRef": "fact_sales_pipeline.deal_stage",
+              "nativeQueryRef": "deal_stage",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_sales_pipeline"
+                        }
+                      },
+                      "Property": "opportunity_id"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "CountNonNull(fact_sales_pipeline.opportunity_id)",
+              "nativeQueryRef": "Count of opportunity_id1"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "97f4c982ff5987244fd4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_sales_pipeline"
+              }
+            },
+            "Property": "deal_stage"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "568d24fc1c1845b545c0",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_sales_pipeline"
+                  }
+                },
+                "Property": "opportunity_id"
+              }
+            },
+            "Function": 5
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

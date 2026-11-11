@@ -1,0 +1,131 @@
+table fact_sales_pipeline
+	lineageTag: 83b96345-e10e-4440-aa75-198a7548f699
+
+	column opportunity_id
+		dataType: string
+		lineageTag: 3d571691-82ce-46be-af14-aabb645bbf0a
+		summarizeBy: none
+		sourceColumn: opportunity_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_agent
+		dataType: string
+		isHidden
+		lineageTag: f857daf6-c1dc-4f3c-970c-4f63a0d587af
+		summarizeBy: none
+		sourceColumn: sales_agent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column product
+		dataType: string
+		isHidden
+		lineageTag: 1e275c9f-3179-4c7f-ad93-1d55071b8670
+		summarizeBy: none
+		sourceColumn: product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column account
+		dataType: string
+		isHidden
+		lineageTag: cae9c892-6e1e-483e-82b9-e8974d3303f7
+		summarizeBy: none
+		sourceColumn: account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column deal_stage
+		dataType: string
+		lineageTag: f0791085-443a-473a-9cd3-74a0dd146247
+		summarizeBy: none
+		sourceColumn: deal_stage
+		sortByColumn: stage_sort_order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column engage_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 09cda781-cb9e-44bb-be78-40dbbc3350d2
+		summarizeBy: none
+		sourceColumn: engage_date
+
+		variation Variation
+			isDefault
+			relationship: 4760ddcc-9019-431b-b59c-b592cbeea390
+			defaultHierarchy: LocalDateTable_3da83689-7535-49e0-81fd-7c56d59f9d66.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column close_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2f7e1d2c-cec0-4b7f-ad50-947d5432b92d
+		summarizeBy: none
+		sourceColumn: close_date
+
+		variation Variation
+			isDefault
+			relationship: b25a619e-4c82-4263-8244-f274e2929ca8
+			defaultHierarchy: LocalDateTable_df8c6262-e165-449b-8139-6fc866619b2a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column close_value
+		dataType: int64
+		formatString: 0
+		lineageTag: 7157bed9-2f60-4e48-b572-e9c5facacd4d
+		summarizeBy: sum
+		sourceColumn: close_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column stage_sort_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b3057aa4-b0a4-43c8-8dd7-1cddb829cfc5
+		summarizeBy: sum
+		sourceColumn: stage_sort_order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_to_close
+		dataType: int64
+		formatString: 0
+		lineageTag: 279d9084-b99d-418a-bf1e-7c1799e7b3fd
+		summarizeBy: sum
+		sourceColumn: days_to_close
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_sales_pipeline = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("aws-0-ap-southeast-1.pooler.supabase.com", "postgres"),
+				    public_vw_fact_sales_pipeline = Source{[Schema="public",Item="vw_fact_sales_pipeline"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(public_vw_fact_sales_pipeline, each true)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

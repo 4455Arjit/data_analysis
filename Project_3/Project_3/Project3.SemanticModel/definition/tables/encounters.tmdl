@@ -1,0 +1,208 @@
+table encounters
+	lineageTag: f9384233-0ded-4a2b-8dee-7777c9c6d09b
+
+	column START
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 087b6295-cfdd-47a9-975e-0a5a11f73788
+		summarizeBy: none
+		sourceColumn: START
+
+		variation Variation
+			isDefault
+			relationship: df3ae2f0-cb8a-497f-98f7-ffa94b0a9ceb
+			defaultHierarchy: LocalDateTable_cc558f71-d1ab-49bf-ae31-8133dd383036.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column STOP
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2899c8eb-8016-4945-8d78-3051130ecabe
+		summarizeBy: none
+		sourceColumn: STOP
+
+		variation Variation
+			isDefault
+			relationship: 90238828-0aae-4389-9695-7c6906860102
+			defaultHierarchy: LocalDateTable_58c1b93d-0053-4661-b8e2-85e36c5ef44c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ENCOUNTERCLASS
+		dataType: string
+		lineageTag: b9c358bd-cec0-424a-a698-3a98b69386f9
+		summarizeBy: none
+		sourceColumn: ENCOUNTERCLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column CODE
+		dataType: int64
+		formatString: 0
+		lineageTag: d3faae56-ef48-41eb-b042-8c36babf9446
+		summarizeBy: sum
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DESCRIPTION
+		dataType: string
+		lineageTag: 5e718bf1-d4d1-4d99-8634-066217a26d4a
+		summarizeBy: none
+		sourceColumn: DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column BASE_ENCOUNTER_COST
+		dataType: double
+		lineageTag: fed3bdf4-019b-479d-9625-b9fc3556be85
+		summarizeBy: sum
+		sourceColumn: BASE_ENCOUNTER_COST
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TOTAL_CLAIM_COST
+		dataType: double
+		lineageTag: 0c952ef6-9336-4213-bf83-80349e880046
+		summarizeBy: sum
+		sourceColumn: TOTAL_CLAIM_COST
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PAYER_COVERAGE
+		dataType: double
+		lineageTag: 7b8a4239-6684-4b1d-a33e-2e7e62172f24
+		summarizeBy: sum
+		sourceColumn: PAYER_COVERAGE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REASONCODE
+		dataType: double
+		formatString: 0
+		lineageTag: 0b0a21c7-705c-427b-9f13-065168f974d4
+		summarizeBy: sum
+		sourceColumn: REASONCODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column REASONDESCRIPTION
+		dataType: string
+		lineageTag: fed0e821-63b0-4cf1-b4d4-b8597002addc
+		summarizeBy: none
+		sourceColumn: REASONDESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column encounter_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e742248-965a-4d95-85e9-090279790293
+		summarizeBy: sum
+		sourceColumn: encounter_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e648095-6040-424c-a458-b6f6c1fb6fc9
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column org_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e09d581-7ad2-4948-87a7-7469f80a001f
+		summarizeBy: sum
+		sourceColumn: org_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column payer_key
+		dataType: int64
+		formatString: 0
+		lineageTag: e76219f8-3808-47cb-aef2-7032336d9074
+		summarizeBy: none
+		sourceColumn: payer_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Encounter_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ceb776c6-d061-4823-a2e7-f6cff79849b9
+		summarizeBy: none
+		sourceColumn: Encounter_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Duration hours'
+		dataType: double
+		lineageTag: 0466fe9b-a337-4cc0-9233-59e24baee49c
+		summarizeBy: sum
+		sourceColumn: Duration hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition encounters = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\encounters.csv"),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", type text}, {"START", type datetime}, {"STOP", type datetime}, {"PATIENT", type text}, {"ORGANIZATION", type text}, {"PAYER", type text}, {"ENCOUNTERCLASS", type text}, {"CODE", Int64.Type}, {"DESCRIPTION", type text}, {"BASE_ENCOUNTER_COST", type number}, {"TOTAL_CLAIM_COST", type number}, {"PAYER_COVERAGE", type number}, {"REASONCODE", Int64.Type}, {"REASONDESCRIPTION", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"PATIENT", "PATIENT_ID"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"PATIENT_ID", "START", "STOP", "Id", "ORGANIZATION", "PAYER", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each true),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Filtered Rows",{{"Id", "encounter_Id"}, {"ORGANIZATION", "ORGANIZATION_id"}, {"PAYER", "PAYER_id"}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns1", {"PATIENT_ID"}, dim_patients_id, {"Id_hash_patient"}, "dim_patients_id", JoinKind.LeftOuter),
+				    #"Expanded dim_patients_id" = Table.ExpandTableColumn(#"Merged Queries", "dim_patients_id", {"patient_id"}, {"dim_patients_id.patient_id"}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Expanded dim_patients_id",{"dim_patients_id.patient_id", "PATIENT_ID", "START", "STOP", "encounter_Id", "ORGANIZATION_id", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns1",{"PATIENT_ID"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns",{{"dim_patients_id.patient_id", "patient_id"}}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Renamed Columns2", {"encounter_Id"}, dim_encounters_id, {"encounter_Id_hash"}, "dim_encounters_id", JoinKind.LeftOuter),
+				    #"Expanded dim_encounters_id" = Table.ExpandTableColumn(#"Merged Queries1", "dim_encounters_id", {"encounter_key"}, {"dim_encounters_id.encounter_key"}),
+				    #"Reordered Columns2" = Table.ReorderColumns(#"Expanded dim_encounters_id",{"patient_id", "START", "STOP", "dim_encounters_id.encounter_key", "encounter_Id", "ORGANIZATION_id", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Reordered Columns2",{"encounter_Id"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Removed Columns1",{{"dim_encounters_id.encounter_key", "encounter_key"}}),
+				    #"Reordered Columns3" = Table.ReorderColumns(#"Renamed Columns3",{"encounter_key", "patient_id", "START", "STOP", "ORGANIZATION_id", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Merged Queries2" = Table.NestedJoin(#"Reordered Columns3", {"ORGANIZATION_id"}, dim_organizations, {"org_hash_Id"}, "organizations", JoinKind.LeftOuter),
+				    #"Expanded organizations" = Table.ExpandTableColumn(#"Merged Queries2", "organizations", {"org_key"}, {"organizations.org_key"}),
+				    #"Renamed Columns4" = Table.RenameColumns(#"Expanded organizations",{{"organizations.org_key", "org_key"}}),
+				    #"Reordered Columns4" = Table.ReorderColumns(#"Renamed Columns4",{"encounter_key", "patient_id", "START", "org_key", "STOP", "ORGANIZATION_id", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Reordered Columns4",{"ORGANIZATION_id"}),
+				    #"Reordered Columns5" = Table.ReorderColumns(#"Removed Columns2",{"encounter_key", "patient_id", "START", "STOP", "org_key", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Merged Queries3" = Table.NestedJoin(#"Reordered Columns5", {"PAYER_id"}, payers, {"Id"}, "payers", JoinKind.LeftOuter),
+				    #"Expanded payers" = Table.ExpandTableColumn(#"Merged Queries3", "payers", {"payer_key"}, {"payers.payer_key"}),
+				    #"Reordered Columns6" = Table.ReorderColumns(#"Expanded payers",{"encounter_key", "patient_id", "START", "STOP", "org_key", "payers.payer_key", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Reordered Columns6",{"PAYER_id"}),
+				    #"Renamed Columns5" = Table.RenameColumns(#"Removed Columns3",{{"payers.payer_key", "payer_key"}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns5",{{"START", type datetimezone}, {"STOP", type datetimezone}}),
+				    #"Inserted Date" = Table.AddColumn(#"Changed Type1", "Date", each DateTime.Date([START]), type date),
+				    #"Renamed Columns6" = Table.RenameColumns(#"Inserted Date",{{"Date", "Encounter_Date"}}),
+				    #"Reordered Columns7" = Table.ReorderColumns(#"Renamed Columns6",{"encounter_key", "patient_id", "Encounter_Date", "START", "STOP", "org_key", "payer_key", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+				    #"Added Custom" = Table.AddColumn(#"Reordered Columns7", "Duration hours", each Duration.TotalHours([STOP]-[START])),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"Duration hours", type number}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type2","","Unspecified Visit",Replacer.ReplaceValue,{"REASONDESCRIPTION"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",null,0,Replacer.ReplaceValue,{"REASONCODE"})
+				in
+				    #"Replaced Value1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

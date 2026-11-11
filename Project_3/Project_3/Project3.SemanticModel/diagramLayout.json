@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 540.35733987738047,
+            "y": 614.82382161983435
+          },
+          "nodeIndex": "procedures",
+          "nodeLineageTag": "3f3f81d2-431c-4d49-9bbe-dfc304e1fb48",
+          "size": {
+            "height": 358.31600167484993,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1004.3453099168519,
+            "y": 81.785690697754447
+          },
+          "nodeIndex": "patients",
+          "nodeLineageTag": "061d3789-cf1c-4fcc-9617-d9343bbf922b",
+          "size": {
+            "height": 581.12933873007182,
+            "width": 281.91732700612238
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 47.659167076067774,
+            "y": 284.32514860632125
+          },
+          "nodeIndex": "encounters",
+          "nodeLineageTag": "f9384233-0ded-4a2b-8dee-7777c9c6d09b",
+          "size": {
+            "height": 505.95444532457748,
+            "width": 264
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 710.03596882383022,
+            "y": 28.344975999999996
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "033a4a09-2bad-41cd-9936-6f58de28ba58",
+          "size": {
+            "height": 209.12175104936117,
+            "width": 222.35534431609176
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 398.33575083853373,
+            "y": 0
+          },
+          "nodeIndex": "payers",
+          "nodeLineageTag": "97305060-f20d-426e-bb4f-dde5dae7e145",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1328.8281336257046,
+            "y": 214.3580698443626
+          },
+          "nodeIndex": "_Measure",
+          "nodeLineageTag": "780c893f-5db0-4737-8191-03c4b028d6d4",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 79.55318203769987,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

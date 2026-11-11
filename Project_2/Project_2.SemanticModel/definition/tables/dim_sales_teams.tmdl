@@ -1,0 +1,48 @@
+table dim_sales_teams
+	lineageTag: f8ff0569-9ac9-4ba2-a3a1-df3599adc65a
+
+	column sales_agent
+		dataType: string
+		lineageTag: 892d3f2a-c8e7-4f2a-b403-3a60c07f81cd
+		summarizeBy: none
+		sourceColumn: sales_agent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column manager
+		dataType: string
+		lineageTag: 60565a51-dcdc-46c9-ab55-286369b1e0e6
+		summarizeBy: none
+		sourceColumn: manager
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional_office
+		dataType: string
+		lineageTag: aa7aa060-32e9-468f-8b0e-34b174e47e3d
+		summarizeBy: none
+		sourceColumn: regional_office
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_sales_teams = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("aws-0-ap-southeast-1.pooler.supabase.com", "postgres"),
+				    public_dim_sales_teams = Source{[Schema="public",Item="dim_sales_teams"]}[Data]
+				in
+				    public_dim_sales_teams
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

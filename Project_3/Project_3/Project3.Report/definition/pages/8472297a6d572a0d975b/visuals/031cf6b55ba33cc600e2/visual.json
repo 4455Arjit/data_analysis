@@ -1,0 +1,242 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "031cf6b55ba33cc600e2",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 151.25,
+    "width": 1280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Claim Cost"
+                }
+              },
+              "queryRef": "_Measure.Total Claim Cost",
+              "nativeQueryRef": "Total Claim Cost"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Payer Coverage Amount"
+                }
+              },
+              "queryRef": "_Measure.Payer Coverage Amount",
+              "nativeQueryRef": "Payer Coverage Amount"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Uncovered Out-of-Pocket"
+                }
+              },
+              "queryRef": "_Measure.Uncovered Out-of-Pocket",
+              "nativeQueryRef": "Uncovered Out-of-Pocket"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Payer Coverage %"
+                }
+              },
+              "queryRef": "_Measure.Payer Coverage %",
+              "nativeQueryRef": "Payer Coverage %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Total Encounters"
+                }
+              },
+              "queryRef": "_Measure.Total Encounters",
+              "nativeQueryRef": "Total Encounters"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Procedure Attachment Rate %"
+                }
+              },
+              "queryRef": "_Measure.Procedure Attachment Rate %",
+              "nativeQueryRef": "Procedure Attachment Rate %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Mortality Rate %"
+                }
+              },
+              "queryRef": "_Measure.Mortality Rate %",
+              "nativeQueryRef": "Mortality Rate %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measure"
+                  }
+                },
+                "Property": "Total Claim Cost"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2139234092cb06a9493b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Claim Cost"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cab18ce805e95e2a3ca5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Payer Coverage Amount"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0ee6a595360674258d12",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Uncovered Out-of-Pocket"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "56cf35947811b4cd420d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Payer Coverage %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ad9c177a0c4dc9bc09ba",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Total Encounters"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "03109ec109bbacc4ea52",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Procedure Attachment Rate %"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d55a1e3b7407b885a002",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Mortality Rate %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

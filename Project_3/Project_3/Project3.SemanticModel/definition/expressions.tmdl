@@ -1,0 +1,121 @@
+expression dim_patients_id =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\patients.csv"),[Delimiter=",", Columns=20, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", type text}, {"BIRTHDATE", type date}, {"DEATHDATE", type date}, {"PREFIX", type text}, {"FIRST", type text}, {"LAST", type text}, {"SUFFIX", type text}, {"MAIDEN", type text}, {"MARITAL", type text}, {"RACE", type text}, {"ETHNICITY", type text}, {"GENDER", type text}, {"BIRTHPLACE", type text}, {"ADDRESS", type text}, {"CITY", type text}, {"STATE", type text}, {"COUNTY", type text}, {"ZIP", Int64.Type}, {"LAT", type number}, {"LON", type number}}),
+		    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"FIRST", Text.Trim, type text}, {"LAST", Text.Trim, type text}, {"MAIDEN", Text.Trim, type text}}),
+		    #"Added Custom" = Table.AddColumn(#"Trimmed Text", "First_name", each Text.Remove([FIRST],{"0".."9"})),
+		    #"Added Custom1" = Table.AddColumn(#"Added Custom", "Last_name", each Text.Remove([LAST],{"0".."9"})),
+		    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "MAI_DEN", each Text.Remove([MAIDEN],{"0".."9"})),
+		    #"Removed Columns" = Table.RemoveColumns(#"Added Custom2",{"FIRST", "LAST", "MAIDEN"}),
+		    #"Inserted Merged Column" = Table.AddColumn(#"Removed Columns", "Full Name", each Text.Combine({[First_name], [Last_name]}, " "), type text),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Inserted Merged Column",{"First_name", "Last_name"}),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Removed Columns1",{"Id", "BIRTHDATE", "DEATHDATE", "PREFIX", "Full Name", "SUFFIX", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON", "MAI_DEN"}),
+		    #"Inserted Merged Column1" = Table.AddColumn(#"Reordered Columns", "Patient_FullName", each Text.Combine({[PREFIX], [Full Name]}, " "), type text),
+		    #"Removed Columns2" = Table.RemoveColumns(#"Inserted Merged Column1",{"PREFIX", "Full Name"}),
+		    #"Reordered Columns1" = Table.ReorderColumns(#"Removed Columns2",{"Id", "BIRTHDATE", "SUFFIX", "Patient_FullName", "DEATHDATE", "MAI_DEN", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns1",{{"MAI_DEN", "MAIDEN"}, {"Patient_FullName", "Patient_Name"}}),
+		    #"Reordered Columns2" = Table.ReorderColumns(#"Renamed Columns",{"Id", "BIRTHDATE", "SUFFIX", "Patient_Name", "MAIDEN", "DEATHDATE", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Reordered Columns2", "Death_Date", each if [DEATHDATE] = null then "Alive" else "Dead"),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Added Conditional Column", "DEATHDATE", "DEATHDATE - Copy"),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Duplicated Column",{{"DEATHDATE - Copy", "DEATHDATE_original"}}),
+		    #"Reordered Columns3" = Table.ReorderColumns(#"Renamed Columns1",{"Id", "BIRTHDATE", "SUFFIX", "Patient_Name", "MAIDEN", "DEATHDATE", "Death_Date", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON"}),
+		    #"Removed Columns3" = Table.RemoveColumns(#"Reordered Columns3",{"DEATHDATE"}),
+		    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns3",{{"Death_Date", "Dead_alive"}}),
+		    #"Removed Columns4" = Table.RemoveColumns(#"Renamed Columns2",{"BIRTHDATE", "SUFFIX", "Patient_Name", "MAIDEN", "Dead_alive", "MARITAL", "RACE", "ETHNICITY", "GENDER", "BIRTHPLACE", "ADDRESS", "CITY", "STATE", "COUNTY", "ZIP", "LAT", "LON", "DEATHDATE_original"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Columns4"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns3" = Table.RenameColumns(#"Added Index",{{"Index", "patient_id"}}),
+		    #"Reordered Columns4" = Table.ReorderColumns(#"Renamed Columns3",{"patient_id", "Id"}),
+		    #"Renamed Columns4" = Table.RenameColumns(#"Reordered Columns4",{{"Id", "Id_hash_patient"}})
+		in
+		    #"Renamed Columns4"
+	lineageTag: 114b314c-30ff-4f48-ba5f-b6c157e391a6
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dim_organizations =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\organizations.csv"),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", type text}, {"NAME", type text}, {"ADDRESS", type text}, {"CITY", type text}, {"STATE", type text}, {"ZIP", Int64.Type}, {"LAT", type number}, {"LON", type number}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Id", "org_hash_Id"}}),
+		    #"Added Index" = Table.AddIndexColumn(#"Renamed Columns", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Added Index",{{"Index", "org_key"}}),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns1",{"org_key", "org_hash_Id", "NAME", "ADDRESS", "CITY", "STATE", "ZIP", "LAT", "LON"})
+		in
+		    #"Reordered Columns"
+	lineageTag: 3c907ea7-0040-444d-9b7b-7ba03b1f04d5
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dim_encounters_id =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\encounters.csv"),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", type text}, {"START", type datetime}, {"STOP", type datetime}, {"PATIENT", type text}, {"ORGANIZATION", type text}, {"PAYER", type text}, {"ENCOUNTERCLASS", type text}, {"CODE", Int64.Type}, {"DESCRIPTION", type text}, {"BASE_ENCOUNTER_COST", type number}, {"TOTAL_CLAIM_COST", type number}, {"PAYER_COVERAGE", type number}, {"REASONCODE", Int64.Type}, {"REASONDESCRIPTION", type text}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"PATIENT", "PATIENT_ID"}}),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"PATIENT_ID", "START", "STOP", "Id", "ORGANIZATION", "PAYER", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Reordered Columns", each true),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Filtered Rows",{{"Id", "encounter_Id"}, {"ORGANIZATION", "ORGANIZATION_id"}, {"PAYER", "PAYER_id"}}),
+		    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns1", {"PATIENT_ID"}, dim_patients_id, {"Id_hash_patient"}, "dim_patients_id", JoinKind.LeftOuter),
+		    #"Expanded dim_patients_id" = Table.ExpandTableColumn(#"Merged Queries", "dim_patients_id", {"patient_id"}, {"dim_patients_id.patient_id"}),
+		    #"Reordered Columns1" = Table.ReorderColumns(#"Expanded dim_patients_id",{"dim_patients_id.patient_id", "PATIENT_ID", "START", "STOP", "encounter_Id", "ORGANIZATION_id", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns1",{"PATIENT_ID"}),
+		    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns",{{"dim_patients_id.patient_id", "patient_id"}}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Renamed Columns2",{"patient_id", "START", "STOP", "ORGANIZATION_id", "PAYER_id", "ENCOUNTERCLASS", "CODE", "DESCRIPTION", "BASE_ENCOUNTER_COST", "TOTAL_CLAIM_COST", "PAYER_COVERAGE", "REASONCODE", "REASONDESCRIPTION"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Columns1"),
+		    #"Removed Duplicates1" = Table.Distinct(#"Removed Duplicates"),
+		    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates1", "Index", 1, 1, Int64.Type),
+		    #"Renamed Columns3" = Table.RenameColumns(#"Added Index",{{"encounter_Id", "encounter_Id_hash"}, {"Index", "encounter_key"}})
+		in
+		    #"Renamed Columns3"
+	lineageTag: 4a27504f-4bae-4828-85e5-a32d3c864d81
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
+expression dim_procedure_encounter =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\Project_3\src\procedures.csv"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"START", type datetime}, {"STOP", type datetime}, {"PATIENT", type text}, {"ENCOUNTER", type text}, {"CODE", Int64.Type}, {"DESCRIPTION", type text}, {"BASE_COST", Int64.Type}, {"REASONCODE", Int64.Type}, {"REASONDESCRIPTION", type text}}),
+		    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"PATIENT", "PATIENT_ID"}}),
+		    #"Merged Queries" = Table.NestedJoin(#"Renamed Columns", {"PATIENT_ID"}, dim_patients_id, {"Id_hash_patient"}, "dim_patients_id", JoinKind.LeftOuter),
+		    #"Expanded dim_patients_id" = Table.ExpandTableColumn(#"Merged Queries", "dim_patients_id", {"patient_id"}, {"dim_patients_id.patient_id"}),
+		    #"Reordered Columns" = Table.ReorderColumns(#"Expanded dim_patients_id",{"dim_patients_id.patient_id", "PATIENT_ID", "START", "STOP", "ENCOUNTER", "CODE", "DESCRIPTION", "BASE_COST", "REASONCODE", "REASONDESCRIPTION"}),
+		    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"PATIENT_ID"}),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"dim_patients_id.patient_id", "patient_id"}}),
+		    #"Sorted Rows" = Table.Sort(#"Renamed Columns1",{{"patient_id", Order.Ascending}}),
+		    #"Merged Queries1" = Table.NestedJoin(#"Sorted Rows", {"ENCOUNTER"}, dim_encounters_id, {"encounter_Id_hash"}, "dim_encounters_id", JoinKind.LeftOuter),
+		    #"Expanded dim_encounters_id" = Table.ExpandTableColumn(#"Merged Queries1", "dim_encounters_id", {"encounter_key"}, {"dim_encounters_id.encounter_key"}),
+		    #"Renamed Columns2" = Table.RenameColumns(#"Expanded dim_encounters_id",{{"dim_encounters_id.encounter_key", "encounter_key"}}),
+		    #"Reordered Columns1" = Table.ReorderColumns(#"Renamed Columns2",{"patient_id", "START", "STOP", "ENCOUNTER", "encounter_key", "CODE", "DESCRIPTION", "BASE_COST", "REASONCODE", "REASONDESCRIPTION"}),
+		    #"Removed Columns1" = Table.RemoveColumns(#"Reordered Columns1",{"ENCOUNTER"}),
+		    #"Added Conditional Column" = Table.AddColumn(#"Removed Columns1", "Custom", each if [REASONCODE] = null then "n/a" else [REASONCODE]),
+		    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"REASONCODE"}),
+		    #"Renamed Columns3" = Table.RenameColumns(#"Removed Columns2",{{"Custom", "REASON_CODE"}}),
+		    #"Reordered Columns2" = Table.ReorderColumns(#"Renamed Columns3",{"patient_id", "START", "STOP", "encounter_key", "CODE", "DESCRIPTION", "BASE_COST", "REASON_CODE", "REASONDESCRIPTION"}),
+		    #"Changed Type1" = Table.TransformColumnTypes(#"Reordered Columns2",{{"STOP", type datetime}, {"START", type datetime}}),
+		    #"Duplicated Column" = Table.DuplicateColumn(#"Changed Type1", "START", "START - Copy"),
+		    #"Extracted Date" = Table.TransformColumns(#"Duplicated Column",{{"START - Copy", DateTime.Date, type date}}),
+		    #"Renamed Columns4" = Table.RenameColumns(#"Extracted Date",{{"START - Copy", "Procedure Date"}}),
+		    #"Reordered Columns3" = Table.ReorderColumns(#"Renamed Columns4",{"patient_id", "START", "Procedure Date", "STOP", "encounter_key", "CODE", "DESCRIPTION", "BASE_COST", "REASON_CODE", "REASONDESCRIPTION"}),
+		    #"Replaced Value" = Table.ReplaceValue(#"Reordered Columns3","","General Clinical Procedure",Replacer.ReplaceValue,{"REASONDESCRIPTION"}),
+		    #"Renamed Columns5" = Table.RenameColumns(#"Replaced Value",{{"DESCRIPTION", "PROCEDURE_DESCRIPTION"}, {"BASE_COST", "PROCEDURE_BASE_COST"}}),
+		    #"Removed Columns3" = Table.RemoveColumns(#"Renamed Columns5",{"patient_id", "START", "Procedure Date", "STOP", "CODE", "PROCEDURE_DESCRIPTION", "PROCEDURE_BASE_COST", "REASON_CODE", "REASONDESCRIPTION"}),
+		    #"Removed Duplicates" = Table.Distinct(#"Removed Columns3"),
+		    #"Sorted Rows1" = Table.Sort(#"Removed Duplicates",{{"encounter_key", Order.Ascending}})
+		in
+		    #"Sorted Rows1"
+	lineageTag: c4c8bd51-a37f-4432-9c6b-0bf7e340bdc8
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

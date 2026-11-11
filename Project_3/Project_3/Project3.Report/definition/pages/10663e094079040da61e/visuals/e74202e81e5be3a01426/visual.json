@@ -1,0 +1,130 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "e74202e81e5be3a01426",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 106.25,
+    "width": 1280,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Unique Patients"
+                }
+              },
+              "queryRef": "_Measure.Unique Patients",
+              "nativeQueryRef": "Unique Patients"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Encounters per Patient"
+                }
+              },
+              "queryRef": "_Measure.Encounters per Patient",
+              "nativeQueryRef": "Encounters per Patient"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measure"
+                    }
+                  },
+                  "Property": "Mortality Rate %"
+                }
+              },
+              "queryRef": "_Measure.Mortality Rate %",
+              "nativeQueryRef": "Mortality Rate %"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measure"
+                  }
+                },
+                "Property": "Unique Patients"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a8370a1e0b26e250b9aa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Unique Patients"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c55cfc896e75b400d120",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Encounters per Patient"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a7dfb1021072b7a2ce62",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measure"
+              }
+            },
+            "Property": "Mortality Rate %"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
