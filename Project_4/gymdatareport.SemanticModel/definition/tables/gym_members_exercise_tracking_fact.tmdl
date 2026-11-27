@@ -1,0 +1,358 @@
+table gym_members_exercise_tracking_fact
+	lineageTag: 9d65b57d-0692-4a30-b4f9-eacd576b6865
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: 10396f24-23dd-40b3-83bd-bf3fdac46474
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 7884bbdc-4b7d-4564-adbb-311fb771767f
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weight (kg)'
+		dataType: decimal
+		lineageTag: 0a017a6d-ac90-4317-a952-57f21362b214
+		summarizeBy: sum
+		sourceColumn: Weight (kg)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Height (m)'
+		dataType: decimal
+		lineageTag: 48267c9c-4375-47de-b81a-c6fdcf33b09c
+		summarizeBy: sum
+		sourceColumn: Height (m)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Max_BPM
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e908de3-e038-4643-876b-b0246c320b02
+		summarizeBy: sum
+		sourceColumn: Max_BPM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Avg_BPM
+		dataType: int64
+		formatString: 0
+		lineageTag: f408dd9d-0fff-4b8e-9b56-843b986eed07
+		summarizeBy: sum
+		sourceColumn: Avg_BPM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resting_BPM
+		dataType: int64
+		formatString: 0
+		lineageTag: 1588de67-4981-4363-9f6e-4c86376dc055
+		summarizeBy: sum
+		sourceColumn: Resting_BPM
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session_Duration (hours)'
+		dataType: decimal
+		lineageTag: f100985e-44fc-4c8b-810a-0eb0612bfe05
+		summarizeBy: sum
+		sourceColumn: Session_Duration (hours)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Calories_Burned
+		dataType: int64
+		formatString: 0
+		lineageTag: 80e966fb-bb10-43b9-b0ce-28bf6565bf24
+		summarizeBy: sum
+		sourceColumn: Calories_Burned
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workout_Type
+		dataType: string
+		lineageTag: a99acae8-6e73-4bca-9cb2-5f2d38053c2a
+		summarizeBy: none
+		sourceColumn: Workout_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fat_Percentage
+		dataType: decimal
+		lineageTag: 44fec370-9a7d-4619-acf6-23d4652d4a36
+		summarizeBy: sum
+		sourceColumn: Fat_Percentage
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Water_Intake (liters)'
+		dataType: decimal
+		lineageTag: 2158c51c-eee9-4f9f-8f76-32f803f52264
+		summarizeBy: sum
+		sourceColumn: Water_Intake (liters)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Workout_Frequency (days/week)'
+		dataType: int64
+		formatString: 0
+		lineageTag: d30910fa-24ec-45d5-9312-14599e8f5887
+		summarizeBy: sum
+		sourceColumn: Workout_Frequency (days/week)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Experience_Level
+		dataType: int64
+		formatString: 0
+		lineageTag: 243a87da-233e-40ec-a348-c5ecc87c20ba
+		summarizeBy: sum
+		sourceColumn: Experience_Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column BMI
+		dataType: decimal
+		lineageTag: 41c87d17-cf7d-4900-8254-9e35c917861d
+		summarizeBy: sum
+		sourceColumn: BMI
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Weight_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Weight (kg)] < 50, "40-50",
+			    [Weight (kg)] < 60, "50-60",
+			    [Weight (kg)] < 70, "60-70",
+			    [Weight (kg)] < 80, "70-80",
+			    [Weight (kg)] < 90, "80-90",
+			    [Weight (kg)] < 100, "90-100",
+			    [Weight (kg)] < 110, "100-110",
+			    [Weight (kg)] < 120, "110-120",
+			    [Weight (kg)] < 130, "120-130",
+			    [Weight (kg)] < 140, "130-140",
+			    [Weight (kg)] < 150, "140-150",
+			    [Weight (kg)] < 160, "150-160",
+			    [Weight (kg)] < 170, "160-170",
+			    [Weight (kg)] < 180, "170-180",
+			    [Weight (kg)] < 190, "180-190",
+			    "190-200"
+			)
+		lineageTag: 21b42768-f6e8-4078-9d79-0569d5fca0ed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Max_BPM_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Max_BPM] < 160, "150-160",
+			    [Max_BPM] < 170, "160-170",
+			    [Max_BPM] < 180, "170-180",
+			    [Max_BPM] < 190, "180-190",
+			    "190-200"
+			)
+		lineageTag: edfb9a3e-174e-47f0-ab36-ec8c361e45ba
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Height_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Height (m)] < 1.5, "1.0-1.5m",
+			    [Height (m)] < 1.6, "1.5-1.6m",
+			    [Height (m)] < 1.7, "1.6-1.7m",
+			    [Height (m)] < 1.8, "1.7-1.8m",
+			    [Height (m)] < 1.9, "1.8-1.9m",
+			    "1.9-2.0m"
+			)
+		lineageTag: 51b6f3a1-bf66-40d9-8a3c-9b6469114620
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Avg_BPM_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Avg_BPM] < 100, "0-100",
+			    [Avg_BPM] < 120, "100-120",
+			    [Avg_BPM] < 140, "120-140",
+			    [Avg_BPM] < 160, "140-160",
+			    [Avg_BPM] < 180, "160-180",
+			    "180+"
+			)
+		lineageTag: ba810a3c-d737-4290-9fd5-46d1e0299089
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resting_BPM_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Resting_BPM] < 50, "40-50",
+			    [Resting_BPM] < 60, "50-60",
+			    [Resting_BPM] < 70, "60-70",
+			    [Resting_BPM] < 80, "70-80",
+			    "80+"
+			)
+		lineageTag: b899097a-199e-43ce-bf30-21d5fa18a1b2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Session_Duration_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Session_Duration (hours)] < 0.5, "0-0.5 hr",
+			    [Session_Duration (hours)] < 1.0, "0.5-1 hr",
+			    [Session_Duration (hours)] < 1.5, "1-1.5 hr",
+			    [Session_Duration (hours)] < 2.0, "1.5-2 hr",
+			    "2+ hr"
+			)
+		lineageTag: 5082b93b-3f82-4c53-8691-1d8748ac2a11
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Calories_Burned_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Calories_Burned] < 500, "0-500",
+			    [Calories_Burned] < 1000, "500-1000",
+			    [Calories_Burned] < 1500, "1000-1500",
+			    [Calories_Burned] < 2000, "1500-2000",
+			    "2000+"
+			)
+		lineageTag: 28801c6c-e08e-489c-b18c-11673a2754b3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fat_Percentage_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Fat_Percentage] < 10, "0-10%",
+			    [Fat_Percentage] < 20, "10-20%",
+			    [Fat_Percentage] < 30, "20-30%",
+			    [Fat_Percentage] < 40, "30-40%",
+			    "40%+"
+			)
+		lineageTag: 36012bd8-59f6-4f2f-8daf-08ac7c65fc9f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Water_Intake_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [Water_Intake (liters)] < 2, "0-2L",
+			    [Water_Intake (liters)] < 3, "2-3L",
+			    [Water_Intake (liters)] < 4, "3-4L",
+			    [Water_Intake (liters)] < 5, "4-5L",
+			    "5L+"
+			)
+		lineageTag: c8c181b0-7ac5-43a9-9c4f-c229f56cdefb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Experience_Level_Group =
+			
+			SWITCH(
+			    [Experience_Level],
+			    1, "Beginner",
+			    2, "Intermediate",
+			    3, "Advanced",
+			    "Unknown"
+			)
+		lineageTag: 1e2c7095-5a25-419d-9f5b-6ec4829a52f6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column BMI_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    [BMI] < 18.5, "Underweight",
+			    [BMI] < 25, "Normal",
+			    [BMI] < 30, "Overweight",
+			    [BMI] < 35, "Obese I",
+			    [BMI] < 40, "Obese II",
+			    "Obese III"
+			)
+		lineageTag: f3493042-292e-4cea-8905-e546460cdd74
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age_Group =
+			
+			SWITCH(
+			    TRUE(),
+			    'gym_members_exercise_tracking_fact'[Age] < 20, "0-20",
+			    'gym_members_exercise_tracking_fact'[Age] < 40, "20-40",
+			    'gym_members_exercise_tracking_fact'[Age] < 60, "40-60",
+			    'gym_members_exercise_tracking_fact'[Age] < 80, "60-80",
+			    "80-100"
+			)
+		lineageTag: 3d8590ad-7dc4-42f0-8ee0-6ca73309ebd6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition gym_members_exercise_tracking_fact = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\user_4455\Desktop\PowerBiconcept\MyPBIwork\PowerBi Projects\market\gym_members_exercise_tracking.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Age", Int64.Type}, {"Gender", type text}, {"Weight (kg)", type number}, {"Height (m)", type number}, {"Max_BPM", Int64.Type}, {"Avg_BPM", Int64.Type}, {"Resting_BPM", Int64.Type}, {"Session_Duration (hours)", type number}, {"Calories_Burned", Int64.Type}, {"Workout_Type", type text}, {"Fat_Percentage", type number}, {"Water_Intake (liters)", type number}, {"Workout_Frequency (days/week)", Int64.Type}, {"Experience_Level", Int64.Type}, {"BMI", type number}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type",{{"Gender", Text.Trim, type text}}),
+				    #"Sorted Rows" = Table.Sort(#"Trimmed Text",{{"Height (m)", Order.Ascending}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Sorted Rows",{{"Height (m)", Currency.Type}}),
+				    #"Sorted Rows1" = Table.Sort(#"Changed Type1",{{"Height (m)", Order.Ascending}}),
+				    #"Trimmed Text1" = Table.TransformColumns(#"Sorted Rows1",{{"Workout_Type", Text.Trim, type text}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Trimmed Text1",{{"Fat_Percentage", Currency.Type}}),
+				    #"Sorted Rows2" = Table.Sort(#"Changed Type2",{{"Workout_Frequency (days/week)", Order.Ascending}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Sorted Rows2",{{"Weight (kg)", Currency.Type}, {"Session_Duration (hours)", Currency.Type}, {"Water_Intake (liters)", Currency.Type}, {"BMI", Currency.Type}, {"Height (m)", Currency.Type}}),
+				    #"Sorted Rows3" = Table.Sort(#"Changed Type3",{{"Height (m)", Order.Ascending}})
+				in
+				    #"Sorted Rows3"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

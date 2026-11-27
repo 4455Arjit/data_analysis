@@ -1,0 +1,123 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "36baf29e326fd747d1a6",
+  "position": {
+    "x": 354,
+    "y": 152,
+    "z": 10,
+    "height": 228,
+    "width": 296,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gym_members_exercise_tracking_fact"
+                    }
+                  },
+                  "Property": "Workout_Type"
+                }
+              },
+              "queryRef": "gym_members_exercise_tracking_fact.Workout_Type",
+              "nativeQueryRef": "Workout Type",
+              "active": true,
+              "displayName": "Workout Type"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Calories Burned"
+                }
+              },
+              "queryRef": "_Measures.Total Calories Burned",
+              "nativeQueryRef": "Total Calories Burned"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Total Calories Burned"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "39d61191f0a834e1ad7d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gym_members_exercise_tracking_fact"
+              }
+            },
+            "Property": "Workout_Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "d0a5f21a850e2ce50008",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Calories Burned"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "a4c8f910cdb975d580ce",
+  "position": {
+    "x": 752,
+    "y": 380,
+    "z": 9,
+    "height": 340,
+    "width": 368,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gym_members_exercise_tracking_fact"
+                    }
+                  },
+                  "Property": "Workout_Type"
+                }
+              },
+              "queryRef": "gym_members_exercise_tracking_fact.Workout_Type",
+              "nativeQueryRef": "Workout_Type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Members"
+                }
+              },
+              "queryRef": "_Measures.Member Count",
+              "nativeQueryRef": "Total Members"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Total Members"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Members by Workout Type'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "44e51d91e5052b32ba2c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "gym_members_exercise_tracking_fact"
+              }
+            },
+            "Property": "Workout_Type"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "6342ee122ec0c1c161dc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Members"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

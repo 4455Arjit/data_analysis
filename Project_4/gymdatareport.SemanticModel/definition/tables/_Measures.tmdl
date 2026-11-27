@@ -1,0 +1,57 @@
+table _Measures
+	lineageTag: 111017fb-25d4-48ed-902c-ce8c27e25ec1
+
+	measure 'Total Members' = COUNTROWS(gym_members_exercise_tracking_fact)
+		formatString: 0
+		lineageTag: 99a1521a-0a73-46f3-adc7-389c43ec9740
+
+	measure 'Total Calories Burned' =
+			
+			SUM(gym_members_exercise_tracking_fact[Calories_Burned])
+		formatString: 0
+		lineageTag: 9d59601a-ba89-4deb-8377-ccde5e2e23af
+
+	measure 'Average BMI' =
+			
+			AVERAGE(gym_members_exercise_tracking_fact[BMI])
+		formatString: #,0.00
+		lineageTag: eef26f12-0cea-4588-a359-e9acc757a697
+
+	measure 'Average Session duration ( hours)' =
+			
+			AVERAGE(gym_members_exercise_tracking_fact[Session_Duration (hours)])
+		formatString: #,0.00
+		lineageTag: 0b6e999c-3313-4b4f-9bbd-7099cd4d61d5
+
+	measure 'Average Water Intake' =
+			
+			AVERAGE(gym_members_exercise_tracking_fact[Water_Intake (liters)])
+		formatString: "₹"\ #,0.###############;#,0.###############\ -"₹";"₹"\ #,0.###############
+		lineageTag: eb61c456-3283-4191-bf3a-9131a25cc8bf
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-IN"}
+
+	measure 'Average Max BPM' =
+			
+			AVERAGE(gym_members_exercise_tracking_fact[Max_BPM])
+		lineageTag: 0e2fbe0a-1124-41c0-8bb5-90c0be1ec46d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: 7ad077c5-f3f6-4554-98db-576b496dd161
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = b63a8cd7c9c4479f9d1efeb31774dc71
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+
