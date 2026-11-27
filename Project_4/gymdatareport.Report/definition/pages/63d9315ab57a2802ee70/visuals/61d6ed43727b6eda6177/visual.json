@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "61d6ed43727b6eda6177",
+  "position": {
+    "x": 959,
+    "y": 152,
+    "z": 13,
+    "height": 228,
+    "width": 321,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "treemap",
+    "query": {
+      "queryState": {
+        "Group": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "gym_members_exercise_tracking_fact"
+                    }
+                  },
+                  "Property": "Experience_Level_Group"
+                }
+              },
+              "queryRef": "gym_members_exercise_tracking_fact.Experience_Level_Group",
+              "nativeQueryRef": "Experience_Level_Group",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Members"
+                }
+              },
+              "queryRef": "_Measures.Member Count",
+              "nativeQueryRef": "Total Members"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Total Members by Experience Level'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

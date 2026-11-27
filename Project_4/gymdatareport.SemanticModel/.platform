@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "gymdatareport"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9bd0f493-fe23-405b-ba93-71a3016aaab0"
+  }
+}
