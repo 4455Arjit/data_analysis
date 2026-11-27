@@ -1,4 +1,4 @@
-# Power BI & Full-Stack Analytics Portfolio: Projects 1, 2 & 3
+# Power BI & Full-Stack Analytics Portfolio: Projects 1, 2 ,3 ,4
 
 Enterprise business intelligence portfolio developed by transitioning from full-stack software engineering into data analytics and analytics engineering. These projects demonstrate end-to-end data pipeline construction, REST API ingestion, multi-fact and single-fact Star Schema relational modeling, Query Folding on PostgreSQL, grain-safe DAX architecture, and executive dashboard suites.
 
@@ -107,3 +107,33 @@ An enterprise clinical operations and revenue cycle analytics suite developed on
 <img width="1714" height="888" alt="image" src="https://github.com/user-attachments/assets/6afce1e1-8b0e-4f19-a594-3ea33987e495" />
 <img width="1548" height="906" alt="image" src="https://github.com/user-attachments/assets/feedc861-7ed6-4a88-b14f-f89d299ad4a7" />
 
+
+## Project 4: Health & Fitness Member Analytics Dashboard (Power BI)
+
+An interactive member performance and workout segmentation dashboard built in **Power BI Desktop (`.pbip` Power BI Project format)** to analyze exercise intensity, member demographics, and training distribution across **973 active gym members** burning **881K+ total calories**.
+
+## Executive Overview
+This project transforms raw fitness tracking records into an interactive, single-page analytical report using custom DAX measures and calculated cohort groupings. It enables gym trainers and fitness managers to understand member body composition, experience distribution, and workout preferences at a glance.
+
+<img width="1904" height="847" alt="image" src="https://github.com/user-attachments/assets/9865b5a7-a73e-494e-b43a-93713756cc76" />
+
+## Key Metrics & Visuals
+* **Executive KPI Strip**: Displays **973 Total Members**, **881K Total Calories Burned**, **24.91 Average BMI**, **179.88 Average Max BPM**, and **1.26 Hours Average Session Duration**.
+* **Demographic & Body Composition Breakdown**:
+  * **Age Cohorts**: Segments members across `0–20`, `20–40`, and `40–60` brackets (showing the 40–60 and 20–40 groups make up the vast majority of active attendance).
+  * **BMI Distribution**: Categorizes members across `Normal`, `Overweight`, `Underweight`, `Obese I`, `Obese II`, and `Obese III` to guide personal training and nutrition programming.
+* **Workout & Experience Segmentation**:
+  * **Calorie Output by Workout Type**: Compares total calorie burn (`Strength: 235K / 26.67%`, `HIIT: 226K / 25.60%`, `Yoga: 216K / 24.50%`, `Cardio: 205K / 23.22%`) alongside average calories burned per session.
+  * **Experience Level Treemap**: Highlights member distribution across `Intermediate`, `Beginner`, and `Advanced` tiers.
+  * **Gender Split by Workout Type**: Stacked column breakdown comparing male and female participation across Strength, Cardio, Yoga, and HIIT.
+* **Interactive Slicers**: Dynamic filtering by `Gender`, `Workout Type`, and `Age Group`.
+
+## Technical Architecture
+* **Version-Controlled Format**: Built and saved as a **Power BI Project (`.pbip`)** for clean Git tracking and collaborative source control.
+* **Dedicated `_Measures` Library**: Centralized DAX measures (`Total Members`, `Total Calories Burned`, `Average BMI`, `Average Max BPM`, `Average Session duration (hours)`, `Average Water Intake`) separated from fact columns.
+* **Custom Cohort Engineering**: Built calculated grouping columns (`Age_Group`, `BMI_Group`, `Experience_Level_Group`, `Calories_Burned_Group`, `Fat_Percentage_Group`, `Session_Duration_Group`) to turn continuous biometric readings into business-ready segments.
+
+## Tools Used
+* **Power BI Desktop (`.pbip`)** — Data modeling, DAX measures, and visual design
+* **DAX** — KPI aggregations and dynamic cohort segmentation
+* **Power Query** — Data ingestion and column typing
